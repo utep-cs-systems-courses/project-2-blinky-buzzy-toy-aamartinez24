@@ -3,8 +3,8 @@
 #include "led.h"
 #include "stateMachines.h"
 
+/* effectively boolean */
 char SW1_state_down, SW2_state_down, SW3_state_down, SW4_state_down;
-char switch_state_changed; /* effectively boolean */
 
 static char 
 switch_update_interrupt_sense()
@@ -32,18 +32,36 @@ switch_interrupt_handler()
 {
   char p2val = switch_update_interrupt_sense();
   
-  SW1_state_down = (p2val & SW1) ? 0 : SW1;
-  SW2_state_down = (p2val & SW2) ? 0 : SW2;
-  SW3_state_down = (p2val & SW3) ? 0 : SW3;
-  SW4_state_down = (p2val & SW4) ? 0 : SW4;
+  SW1_state_down = (p2val & SW1) ? 0 : 1;    /* 0 when switch is up */
+  SW2_state_down = (p2val & SW2) ? 0 : 1;
+  SW3_state_down = (p2val & SW3) ? 0 : 1;
+  SW4_state_down = (p2val & SW4) ? 0 : 1;
   
   if(SW1_state_down){
-    state_advance();
+    led_toggle();               /* alternate between turning on green or red led */
   }
   if(SW2_state_down){
-    enableWDTInterrupts();
+    static char press = 0;
+    switch(press){
+    case 0:
+      ledsOn();
+      press = 1;
+      break;
+    case 1:
+      enableWDTInterrupts();    /* enable periodic interrupt */
+      press = 2;
+      break;
+    case 2:
+      WDTCTL = WDTPW + WDTHOLD; /* turn off watchdog timer */
+      ledsOff();
+      press = 0;
+      break;
+    }
   }
   if(SW3_state_down){
-    song1();
+    random_song();
+  }
+  if(SW4_state_down){
+    tones();
   }
 }

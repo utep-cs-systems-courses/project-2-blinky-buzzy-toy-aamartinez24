@@ -6,7 +6,7 @@
 
 void main(void) 
 {  
-  configureClocks();
+  configureClocks();       /* setup maste oscillator, CPU & peripheral clocks */
   switch_init();
   led_init();
   buzzer_init();

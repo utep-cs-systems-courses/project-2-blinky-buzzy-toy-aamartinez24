@@ -2,27 +2,25 @@
 This program uses interrupts to detect when a switch is pressed or
 released.
 
-Press S1, and the green LED is illuminated.  Release it, and the red
-LED is illuminated instead.
+By utilizing the basic knowledge of a buzzer,buttons, leds, and interrupts
+displaied on the demos, the program will execute different functionalities using the MSP430.
 
-## Exploration
-_LED toggle:_  A great initial project would be to modify this program to
-implement a state machine that "toggled" between the red and green LEDs
-each time the button is pressed. The LED should remain illuminated until
-the next time the button is pressed.
+## First Button
+The first switch will cause for the red led light to turn on and if pressed
+again the green led light will turn on while turrning off the other. Youll be
+able to alternate each light by pressing the switch.
 
-_Separation of duties:_ Input and output are not always so closely
-connected.  Frequently an input begins a computation that eventually
-results in an output. For example, pressing "next song" on a streaming
-audio player begins a complicated multi-stage process that eventually
-results in a different song being played.  Suggestion: start with
-something simple such as responding to the buttons using interrupts to
-set state variables, and update the LEDs when the timer interrupt
-occurs.  
+## Second Button
+The second switch will initally turn on both led lights at the same time. When
+pressed again, the lights will become dimmer. This is done by using the watch
+dog timer and turnning the leds on and off at a speed that the human eye does
+not percieve. Finally, if the button is pressed again it will exit out of loop
+and completely turn off both leds.
 
-_Time and button interaction:_
-Integrate the timer mechanisms from the blink demo and have the button affect the blink sequence.
+## Third Button
+Third switch will play a short tune by using the buzzer and setting a list of
+different frequencies which will make a different tone when played.
 
-## Some Advice
-When creating your own variants to the demo programs,
-it's probably a good idea to keep a copy of the original program (or really understand how _git checkout_ works).  
+## Fourth Button
+Finally, the last switch will play a different note each time pressed. More
+specifically it will play the notes C, D, E, F, G, A, and B.

@@ -22,7 +22,6 @@ void enableWDTInterrupts()
   IE1 |= WDTIE;		   // Enable watchdog interval timer interrupt
 }
 
-
 void timerAUpmode()
 {
   TA0CCR0 = 0; 
@@ -34,5 +33,3 @@ void timerAUpmode()
   //  Mode Control 1: continuously 0...CCR0
   TACTL = TASSEL_2 + MC_1;   
 }
-
-
